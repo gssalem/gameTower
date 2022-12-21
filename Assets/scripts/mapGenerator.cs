@@ -15,17 +15,21 @@ public class mapGenerator : MonoBehaviour
     public static GameObject startTile;
     public static GameObject endTile;
 
-    private bool reachedX = false;
+    public static GameObject startTile2;
+    public static GameObject endTile2;
+
+    public static List<GameObject> pathTiles2 = new List<GameObject>();
+
     private bool reachedY = false;
 
     private GameObject currentTile;
     private int currentIndex;
     private int nextIndex;
 
-    public Color pathColor;
+    public Sprite pathColor;
 
-    public Color startColor;
-    public Color endColor;
+    public Sprite startColor;
+    public Sprite endColor;
 
     private void Start()
     {
@@ -64,28 +68,20 @@ public class mapGenerator : MonoBehaviour
         currentTile = mapTiles[nextIndex];
     }
 
-
-    private void moveLeft()
+    private void moveDown2()
     {
-        pathTiles.Add(currentTile);
+        pathTiles2.Add(currentTile);
         currentIndex = mapTiles.IndexOf(currentTile);
-        nextIndex = currentIndex-1;
+        nextIndex = currentIndex - mapWidth;
         currentTile = mapTiles[nextIndex];
     }
 
-    private void moveRight()
-    {
-        pathTiles.Add(currentTile);
-        currentIndex = mapTiles.IndexOf(currentTile);
-        nextIndex = currentIndex+1;
-        currentTile = mapTiles[nextIndex];
-    }
 
     private void generateMap()
     {
-        for(int y = 0; y < mapHeight; y++)
+        for(int y = 0; y != mapHeight; y++)
         {
-            for(int x = 0; x < mapWidth; x++)
+            for(int x = 0; x != mapWidth; x++)
             {
                 GameObject newTile = Instantiate(mapTile);   
                 
@@ -98,40 +94,13 @@ public class mapGenerator : MonoBehaviour
         List<GameObject> topEdgeTiles = getTopEdgeTiles();
         List<GameObject> bottomEdgeTiles = getBottomEdgeTiles();
 
-        int rand1 = Random.Range(0, mapWidth);
-        int rand2 = Random.Range(0, mapWidth);
-        
-
-        startTile = topEdgeTiles[rand1];
-        endTile = bottomEdgeTiles[rand2];
+        startTile = topEdgeTiles[0];
+        endTile = bottomEdgeTiles[0];
 
         currentTile = startTile;
 
         moveDown();
 
-        int loopCount = 0;
-
-        while(reachedX == false)
-        {
-
-            loopCount++;
-            if(loopCount > 100)
-            {
-                Debug.Log("Loop muito longo");
-                break;
-            }
-            if(currentTile.transform.position.x > endTile.transform.position.x){
-                moveLeft();
-            }
-            else if(currentTile.transform.position.x < endTile.transform.position.x)
-            {
-                moveRight();
-            }
-            else
-            {
-                reachedX = true;
-            }
-        }
         while(reachedY == false)
         {
             if(currentTile.transform.position.y > endTile.transform.position.y)
@@ -143,13 +112,45 @@ public class mapGenerator : MonoBehaviour
             }
         }
 
+        reachedY = false;
+
         pathTiles.Add(endTile);
 
         foreach(GameObject obj in pathTiles)
         {
-            obj.GetComponent<SpriteRenderer>().color = pathColor;
+            obj.GetComponent<SpriteRenderer>().sprite = pathColor;
         }
-        startTile.GetComponent<SpriteRenderer>().color = startColor;
-        endTile.GetComponent<SpriteRenderer>().color = endColor;
+        startTile.GetComponent<SpriteRenderer>().sprite = startColor;
+        endTile.GetComponent<SpriteRenderer>().sprite = endColor;
+
+        topEdgeTiles = getTopEdgeTiles();
+        bottomEdgeTiles = getBottomEdgeTiles();
+
+        startTile2 = topEdgeTiles[3];
+        endTile2 = bottomEdgeTiles[3];
+
+        currentTile = startTile2;
+
+        moveDown2();
+
+        while(reachedY == false)
+        {
+            if(currentTile.transform.position.y > endTile2.transform.position.y)
+            {
+                moveDown2();
+            }
+            else{
+                reachedY = true;
+            }
+        }
+
+        pathTiles2.Add(endTile2);
+
+        foreach(GameObject obj in pathTiles2)
+        {
+            obj.GetComponent<SpriteRenderer>().sprite = pathColor;
+        }
+        startTile.GetComponent<SpriteRenderer>().sprite = startColor;
+        endTile.GetComponent<SpriteRenderer>().sprite = endColor;
     }
 }

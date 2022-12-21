@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class RoundController : MonoBehaviour
 {
+    public GameObject inicioAlly;
+    public GameObject inicioAlly2;
+    public GameObject inicioEnemy;
+    public GameObject inicioEnemy2;
+
     public GameObject basicEnemy;
 
     public float timeBetweenWaves;
@@ -24,7 +29,7 @@ public class RoundController : MonoBehaviour
 
         round = 1;
     }
-
+    
     private void SpawnEnemies()
     {
         StartCoroutine("ISpawnEnemies");
@@ -34,11 +39,11 @@ public class RoundController : MonoBehaviour
     {
         for(int i = 0; i < round; i++)
         {
-            GameObject newEnemy = Instantiate(basicEnemy, mapGenerator.startTile.transform.position, Quaternion.identity);
+            GameObject newEnemy = Instantiate(basicEnemy, inicioEnemy.transform.position, Quaternion.identity);
             yield return new WaitForSeconds(1f);
         }
     }
-
+    
     private void Update()
     {
         if(isStartOfRound)

@@ -4,7 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
+  - Chegada
+  - Path
+  - AllyBase
+  - EnemyBase
+  - topBar
+  - CardEnter
   layers:
   - Default
   - TransparentFX
@@ -12,6 +17,10 @@ TagManager:
   - 
   - Water
   - UI
+  - Ally
+  - Enemy
+  - CardEnter
+  - Card
   - 
   - 
   - 
@@ -22,13 +31,9 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Layer 1
+  - Layer 2
+  - Layer 3
   - 
   - 
   - 
@@ -42,18 +47,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Ground
-    uniqueID: 527030549
+  - name: Layer 1
+    uniqueID: 2425651459
     locked: 0
-  - name: Turret
-    uniqueID: 1755047597
+  - name: Layer 2
+    uniqueID: 4250941897
     locked: 0
-  - name: Barrel
-    uniqueID: 3077102089
-    locked: 0
-  - name: Enemy
-    uniqueID: 2242709801
-    locked: 0
-  - name: Bullet
-    uniqueID: 399571441
+  - name: Layer 3
+    uniqueID: 4189426099
     locked: 0
